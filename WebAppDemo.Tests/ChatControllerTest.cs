@@ -27,17 +27,17 @@ namespace WebAppDemo.Tests
 
         }
 
-        [Fact]
-        public void Print_by_defalut_msg()
-        {
-            var controller = new ChatController();
-            var expected = (ActionResult<IEnumerable<string>>)new string[] { "enter your message" };
-            var actual = controller.Get();
+        //[Fact]
+        //public void Print_by_defalut_msg()
+        //{
+        //    var controller = new ChatController();
+        //    var expected = (ActionResult<IEnumerable<string>>)new string[] { "enter your message" };
+        //    var actual = controller.Get();
 
-            Assert.Equal(actual, expected);
+        //    Assert.Equal(actual, expected);
             
 
-        }
+        //}
 
         [Fact]
         public void For_any_other_intut_print_the_defalut_message()
