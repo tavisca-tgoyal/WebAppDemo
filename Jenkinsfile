@@ -11,7 +11,7 @@ pipeline {
             steps {
                powershell '''
                dotnet restore $ENV:WORKSPACE\\$($env:API_SOLUTION) --source https://api.nuget.org/v3/index.json
-               dotnet build $ENV:WORKSPACE\\$($env:API_SOLUTION) -p:Configration=release -v:n
+               dotnet build $ENV:WORKSPACE\\$($env:API_SOLUTION) -p:Configration=release -o:C:\Users\tgoyal\Desktop\build files -v:q
                '''
               
             }
@@ -25,10 +25,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                powershell '''
-                echo "----------------------------Deploying Project Started-----------------------------"
-                dotnet publish $ENV:WORKSPACE\\$($env:API_SOLUTION) -c Release
-                echo "----------------------------Deploying Project Completed-----------------------------"
+                powershell '''                
+                dotnet publish $ENV:WORKSPACE\\$($env:API_SOLUTION) -o:C:\Users\tgoyal\Desktop\publish files -c Release
                 '''
             }
         }
