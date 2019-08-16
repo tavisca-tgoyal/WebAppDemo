@@ -7,10 +7,16 @@ pipeline {
         choice(name:'choices',choices: ['Both','Build', 'Test'])
     }
     stages {
+        stage('restore'){
+            steps{
+                powershell'''
+                    dotnet restore $ENV:WORKSPACE\\$($env:API_SOLUTION) --source https://api.nuget.org/v3/index.json
+                '''
+            }
+        }
         stage('Build') {
             steps {
-               powershell '''
-               dotnet restore $ENV:WORKSPACE\\$($env:API_SOLUTION) --source https://api.nuget.org/v3/index.json
+               powershell '''              
                dotnet build $ENV:WORKSPACE\\$($env:API_SOLUTION) -p:Configration=release -v:q
                '''
               
@@ -26,30 +32,26 @@ pipeline {
         stage('Publish') {
             steps {
                 powershell '''                
-                dotnet publish $ENV:WORKSPACE\\$($env:API_SOLUTION) -c Release
-                               
+                dotnet publish $ENV:WORKSPACE\\$($env:API_SOLUTION) -c Release                               
                 '''
             }
         }
         
          stage('Compress') {
             steps {
-                powershell '''                
-                
-                compress-archive WebAppDemo\\bin\\Release\\netcoreapp2.2\\publish\\* artifactFiles.zip -Update                
+                powershell '''  
+                compress-archive WebAppDemo\\bin\\Release\\netcoreapp2.2\\publish\\* artifactFiles.zip -Update            
                 '''
             }
         }
         
         stage('Deploy') {
             steps {
-                powershell '''
-				
-				expand-archive artifactFiles.zip ./ -Force
-				dotnet WebAppDemo.dll
-				
+                powershell '''				
+				expand-archive artifactFiles.zip C:\Users\tgoyal\Desktop\unzip -Force
+				dotnet WebAppDemo.dll				
 				'''
             }
-    			}
+    	}
 	}
 }
