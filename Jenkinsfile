@@ -23,12 +23,32 @@ pipeline {
               '''
             }
         }
-        stage('Deploy') {
+        stage('Publish') {
             steps {
                 powershell '''                
                 dotnet publish $ENV:WORKSPACE\\$($env:API_SOLUTION) -c Release
+                               
                 '''
             }
         }
+        
+         stage('Compress') {
+            steps {
+                powershell '''                
+                
+                compress-archive WebAppDemo\\bin\\Release\\netcoreapp2.2\\publish\\* artifactFiles.zip -Update                
+                '''
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                powershell '''
+				
+				expand-archive artifactFiles.zip ./ -Force
+				dotnet WebAppDemo.dll
+				
+				'''
+            }
     }
 }
