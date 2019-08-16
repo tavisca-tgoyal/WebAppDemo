@@ -32,7 +32,7 @@ pipeline {
             steps {
                 powershell '''			
 				
-                dotnet $ENV:WORKSPACE\\$(WebAppDemo.dll) 
+                dotnet $ENV:WORKSPACE\\$($env:WebAppDemo.dll) 
 							
 				'''
             }
