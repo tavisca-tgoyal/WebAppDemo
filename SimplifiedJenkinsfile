@@ -31,8 +31,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 powershell '''				
-				expand-archive artifactFiles.zip C:\\Users\\tgoyal\\Desktop\\unzip -Force
-				dotnet WebAppDemo.dll				
+				
+                dotnet $Env:"C:\Program Files (x86)\Jenkins\workspace\temp\WebAppDemo\bin\Release\netcoreapp2.2\publish\WebAppDemo.dll"
+							
 				'''
             }
     	}
