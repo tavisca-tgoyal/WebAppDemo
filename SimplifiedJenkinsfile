@@ -32,7 +32,7 @@ pipeline {
             steps {
                 powershell '''				
 				
-                dotnet $Env:"C:\Program Files (x86)\Jenkins\workspace\temp\WebAppDemo\bin\Release\netcoreapp2.2\publish\WebAppDemo.dll"
+                dotnet $Env:"C:\\Program Files (x86)\\Jenkins\\workspace\\temp\\WebAppDemo\\bin\\Release\\netcoreapp2.2\\publish\\WebAppDemo.dll"
 							
 				'''
             }
