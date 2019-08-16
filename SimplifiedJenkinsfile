@@ -27,6 +27,7 @@ pipeline {
             }
         }
         
+	wtf
         
         stage('Deploy') {
             steps {
