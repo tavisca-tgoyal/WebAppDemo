@@ -48,7 +48,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 powershell '''				
-				expand-archive artifactFiles.zip C:\Users\tgoyal\Desktop\unzip -Force
+				expand-archive artifactFiles.zip C:\\Users\\tgoyal\\Desktop\\unzip -Force
 				dotnet WebAppDemo.dll				
 				'''
             }
