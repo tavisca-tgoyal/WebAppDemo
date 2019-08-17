@@ -17,7 +17,7 @@ pipeline {
                     dotnet restore $ENV:WORKSPACE\\$($env:API_SOLUTION) --source https://api.nuget.org/v3/index.json
                     dotnet build $ENV:WORKSPACE\\$($env:API_SOLUTION) -p:Configration=release -v:q
                     dotnet publish $ENV:WORKSPACE\\$($env:API_SOLUTION) -c Release -o ../publish
-                    docker build --tag=jenpipe --build-arg project_name=%PROJECT_NAME%.dll .
+                    docker build --tag=pipe --build-arg project_name=%PROJECT_NAME%.dll .
                 '''
             }
         }
