@@ -1,9 +1,9 @@
 pipeline {
     agent any
     parameters {
-		string(name: 'GIT_TEST_PATH', defaultValue: 'SampleWebApi.Tests/SampleWebApi.Tests.csproj')
-		string(name: 'SOLUTION_FILE_PATH', defaultValue: 'SampleWebApi.sln')
-		string(name: 'PROJECT_NAME', defaultValue: 'SampleWebApi')
+		string(name: 'GIT_TEST_PATH', defaultValue: 'WebAppDemo.Tests/WebAppDemo.Tests.csproj')
+		string(name: 'SOLUTION_FILE_PATH', defaultValue: 'WebAppDemo.sln')
+		string(name: 'PROJECT_NAME', defaultValue: 'WebAppDemo')
 		string(name: 'PORT_NO', defaultValue: '5064')
   }
  
