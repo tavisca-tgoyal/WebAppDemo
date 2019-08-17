@@ -4,17 +4,20 @@ pipeline {
         string(name: 'GIT_HTTPS_PATH', defaultValue: 'https://github.com/tavisca-tgoyal/WebAppDemo.git')
         string(name: 'TEST_PROJECT_PATH', defaultValue: 'WebAppDemo.Tests/WebAppDemo.Tests.csproj')
         string(name: 'API_SOLUTION', defaultValue: 'WebAppDemo.sln')
+        string(name: 'PROJECT_NAME', defaultValue: 'WebAppDemo')
+	string(name: 'PORT_NO', defaultValue: '5064')
+	
+	
         
     }
     stages {
         stage('Build'){
             steps{
-                powershell'''
+                bat'''
                     dotnet restore $ENV:WORKSPACE\\$($env:API_SOLUTION) --source https://api.nuget.org/v3/index.json
                     dotnet build $ENV:WORKSPACE\\$($env:API_SOLUTION) -p:Configration=release -v:q
-                    dotnet publish $ENV:WORKSPACE\\$($env:API_SOLUTION) -c Release
-                    compress-archive WebAppDemo\\bin\\Release\\netcoreapp2.2\\publish\\* artifactFiles.zip -Update
-
+                    dotnet publish $ENV:WORKSPACE\\$($env:API_SOLUTION) -c Release -o ../publish
+                    docker build --tag=jenpipe --build-arg project_name=%PROJECT_NAME%.dll .
                 '''
             }
         }
@@ -30,9 +33,8 @@ pipeline {
         
         stage('Deploy') {
             steps {
-                powershell '''			
-				
-                dotnet WebAppDemo\\bin\\Release\\netcoreapp2.2\\publish\\WebAppDemo.dll
+                bat '''			
+		docker run -p %PORT_NO%:80 pipe		
 							
 				'''
             }
