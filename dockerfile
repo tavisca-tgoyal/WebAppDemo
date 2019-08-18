@@ -4,7 +4,7 @@ ARG project_name
 
 WORKDIR /mydir
 
-COPY /publish/. /mydir
+COPY /publishArtifect/. /mydir
 
 EXPOSE 88
 
