@@ -15,24 +15,13 @@ pipeline {
         stage('Build') {
             steps {
                 bat '''
-               
-				echo "----------------------------Build Project Started-----------------------------"
-				dotnet build %SOLUTION_FILE_PATH% -p:Configuration=release -v:n
-				echo "----------------------------Build Project Completed-----------------------------"
-				
-				echo "----------------------------Test Project Started-----------------------------"
+				dotnet build %SOLUTION_FILE_PATH% -p:Configuration=release -v:q	
 				dotnet test %TEST_FILE_PATH%
-				echo "----------------------------Test Project Completed-----------------------------"
-				
-				echo "----------------------------Publishing Project Started-----------------------------"
 				dotnet publish %SOLUTION_PATH% -c Release -o ../publish
-				echo "----------------------------Publishing Project Completed-----------------------------"
 				
-				echo "----------------------------Docker Image Started-----------------------------"
 				docker build --tag=%DOCKER_REPO_NAME%:%IMAGE_VERSION% --build-arg project_name=%PROJECT_NAME%.dll .
 				docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%
 				docker push %DOCKER_REPO_NAME%:%IMAGE_VERSION%
-				echo "----------------------------Docker Image Completed-----------------------------"
 				'''
 			}
 			}
@@ -40,11 +29,9 @@ pipeline {
 		stage('Deploy') {
             steps {
                 bat '''
-				echo "----------------------------Deploying Project Started-----------------------------"
 				docker pull %DOCKER_REPO_NAME%:%IMAGE_VERSION%
 				docker run -p %PORT_NO%:88 %DOCKER_REPO_NAME%:%IMAGE_VERSION%
-				echo "Listening on %PORT_NO%"
-				echo "----------------------------Deploying Project Completed-----------------------------"
+				
 				'''
             }
         }
