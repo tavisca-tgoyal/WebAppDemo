@@ -29,8 +29,8 @@ pipeline {
 		stage('Deploy') {
             steps {
                 bat '''
-				docker pull %DOCKER_REPO_NAME%:%IMAGE_VERSION%
-				docker run -p %PORT_NO%:88 %DOCKER_REPO_NAME%:%IMAGE_VERSION%
+				docker pull %DOCKER_USERNAME%/%DOCKER_REPO_NAME%:%IMAGE_VERSION%
+				docker run -p %PORT_NO%:88 %DOCKER_USERNAME%/%DOCKER_REPO_NAME%:%IMAGE_VERSION%
 				
 				'''
             }
