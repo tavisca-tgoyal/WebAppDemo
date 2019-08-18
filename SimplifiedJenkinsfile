@@ -24,7 +24,6 @@ pipeline {
 				docker login -u %Docker_Username% -p %Docker_Password%				
 				docker push %Docker_Username%/%Name_Of_Docker_Image%:%Docker_Image_Version%
 				
-				echo"your docker image is live on: %Docker_Username%/%Name_Of_Docker_Image%:%Docker_Image_Version% "
 				'''
 			}
 			}
