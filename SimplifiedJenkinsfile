@@ -4,7 +4,11 @@ pipeline {
 		string(name: 'GIT_TEST_PATH', defaultValue: 'WebAppDemo.Tests/WebAppDemo.Tests.csproj')
 		string(name: 'SOLUTION_FILE_PATH', defaultValue: 'WebAppDemo.sln')
 		string(name: 'PROJECT_NAME', defaultValue: 'WebAppDemo')
-		string(name: 'PORT_NO', defaultValue: '5064')
+		string(name: 'PORT_NO', defaultValue: '4447')
+		string(name: 'DOCKER_USERNAME', defaultValue: '')
+		string(name: 'DOCKER_PASSWORD',defaultValue:'')
+		string(name: 'DOCKER_REPO_NAME',defaultValue:'')
+		string(name: 'IMAGE_VERSION', defaultValue:'latest')
   }
  
     stages {
@@ -25,7 +29,9 @@ pipeline {
 				echo "----------------------------Publishing Project Completed-----------------------------"
 				
 				echo "----------------------------Docker Image Started-----------------------------"
-				docker build --tag=pipe --build-arg project_name=%PROJECT_NAME%.dll .
+				docker build --tag=%DOCKER_REPO_NAME%:%IMAGE_VERSION% --build-arg project_name=%PROJECT_NAME%.dll .
+				docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%
+				docker push %DOCKER_REPO_NAME%:%IMAGE_VERSION%
 				echo "----------------------------Docker Image Completed-----------------------------"
 				'''
 			}
@@ -35,7 +41,8 @@ pipeline {
             steps {
                 bat '''
 				echo "----------------------------Deploying Project Started-----------------------------"
-				docker run -p %PORT_NO%:80 pipe
+				docker pull %DOCKER_REPO_NAME%:%IMAGE_VERSION%
+				docker run -p %PORT_NO%:88 %DOCKER_REPO_NAME%:%IMAGE_VERSION%
 				echo "Listening on %PORT_NO%"
 				echo "----------------------------Deploying Project Completed-----------------------------"
 				'''
