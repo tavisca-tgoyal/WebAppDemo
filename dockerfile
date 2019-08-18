@@ -2,11 +2,11 @@ FROM mcr.microsoft.com/dotnet/core/aspnet
 
 ARG project_name
 
-WORKDIR /app
+WORKDIR /webapi
 
-COPY /publish/. /app
+COPY /publish/. /webapi
 
-EXPOSE 80
+EXPOSE 88
 
 ENV env_project_name=$project_name
 
