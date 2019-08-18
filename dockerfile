@@ -2,9 +2,9 @@ FROM mcr.microsoft.com/dotnet/core/aspnet
 
 ARG project_name
 
-WORKDIR /mydir
+WORKDIR /app
 
-COPY /publishArtifect/. /mydir
+COPY /publish/. /app
 
 EXPOSE 88
 
