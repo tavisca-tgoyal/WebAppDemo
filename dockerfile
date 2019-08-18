@@ -2,9 +2,9 @@ FROM mcr.microsoft.com/dotnet/core/aspnet
 
 ARG project_name
 
-WORKDIR /webapi
+WORKDIR /mydir
 
-COPY /publish/. /webapi
+COPY /publish/. /mydir
 
 EXPOSE 88
 
