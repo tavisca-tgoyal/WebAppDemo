@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY /publish/. /app
 
-EXPOSE 88
+EXPOSE 80
 
 ENV env_project_name=$project_name
 
