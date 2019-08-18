@@ -35,7 +35,7 @@ pipeline {
 				
 				echo "hit localhost:%Listen_To_Port%/chat"				
 				
-				docker run -p %Listen_To_Port%:88 %Docker_Username%/%Name_Of_Docker_Image%:%Docker_Image_Version%
+				docker run -p %Listen_To_Port%:80 %Docker_Username%/%Name_Of_Docker_Image%:%Docker_Image_Version%
 				
 				
 				
