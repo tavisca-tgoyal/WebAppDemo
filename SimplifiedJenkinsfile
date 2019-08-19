@@ -16,8 +16,12 @@ pipeline {
         stage('Build') {
             steps {
                 bat '''
+				dotnet C:/sonar/SonarScanner.MSBuild.dll begin /k:"webappapi" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="c107a3d9c1f0d2aa1dc1952cba5436a3c8ead351"
 				dotnet build %Project_Path% -p:Configuration=release -v:q	
 				dotnet test %Test_Project_Path%
+				
+				dotnet C:/sonar/SonarScanner.MSBuild.dll end /d:sonar.login="eb7e145bfd7b37b6e08a11cbe2473e5a61b0452d"
+
 				dotnet publish %Project_Path% -c Release -o ../publish
 				
 				docker build --tag=%Docker_Username%/%Name_Of_Docker_Image%:%Docker_Image_Version% --build-arg project_name=%Solution_Name%.dll .
