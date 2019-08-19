@@ -16,12 +16,11 @@ pipeline {
         stage('Build') {
             steps {
                 bat '''
-				dotnet C:/install_directory/SonarScanner.MSBuild.dll begin /k:"webapi" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="api"
-
+				dotnet SonarScanner.MSBuild.dll begin /k:"webappapi" /d:sonar.host.url="http://localhost:9000"
 				dotnet build %Project_Path% -p:Configuration=release -v:q	
 				dotnet test %Test_Project_Path%
 				
-				dotnet C:/install_directory/SonarScanner.MSBuild.dll end /d:sonar.login="api"
+				dotnet SonarScanner.MSBuild.dll end
 
 				dotnet publish %Project_Path% -c Release -o ../publish
 				
